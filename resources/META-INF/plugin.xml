@@ -1,0 +1,64 @@
+<idea-plugin version="1">
+    <id>com.gos.ActivatePowerModeApplicationPlugin</id>
+    <name>FireBird</name>
+    <version>0.0.1</version>
+    <description>
+        <![CDATA[
+          <h3>FireBird IDEA.</h3>
+          <ul>
+			<li>根据Atom的插件FireBird的效果移植到IDEA上,以https://github.com/ViceFantasyPlace/activate-power-mode为在础.</li>
+		  </ul>
+        ]]>
+    </description>
+
+    <change-notes>
+        <![CDATA[
+
+        ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceInterface="com.gos.firebird.config.Config"
+                            serviceImplementation="com.gos.firebird.config.Config"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="FireBirdGroup" popup="true" text="fire-bird">
+            <add-to-group group-id="WindowMenu" anchor="first"/>
+
+            <action id="Enable" class="com.gos.firebird.action.FireBirdEnableAction" text="开启" description="enable">
+                <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
+            </action>
+
+            <action id="ShakeSwitch" class="com.gos.firebird.action.ShakeSwitchAction" text="震动" description="震动">
+                <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt S"/>
+            </action>
+
+            <action id="ParticleSwitch" class="com.gos.firebird.action.ParticleSwitchAction" text="粒子" description="particle">
+                <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt P"/>
+            </action>
+
+            <action id="ComboSwitchAction" class="com.gos.firebird.action.ComboSwitchAction" text="combo" description="combo"/>
+
+            <action id="ColorSwitch" class="com.gos.firebird.color.ColorSwitchAction" text="色彩" description="colorful"/>
+        </group>
+
+    </actions>
+
+    <application-components>
+        <component>
+            <implementation-class>com.gos.firebird.FireBird</implementation-class>
+        </component>
+    </application-components>
+</idea-plugin>
