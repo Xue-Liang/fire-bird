@@ -42,11 +42,10 @@ public class FireBirdManager {
         if (project != null) {
             // 监听FileEditor的状态
             MessageBusConnection connection = project.getMessageBus().connect();
-            connection.subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, new FileEditorManagerAdapter() {
+            connection.subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, new FileEditorManagerListener() {
                 @Override
                 public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
-                    super.fileOpened(source, file);
-
+                    //super.fileOpened(source, file);
                     destroyShake();
                     destroyParticle();
                     mCurrentEditor = null;
@@ -56,7 +55,7 @@ public class FireBirdManager {
 
                 @Override
                 public void fileClosed(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
-                    super.fileClosed(source, file);
+                    //super.fileClosed(source, file);
 
                     EditorDocumentListener activatePowerDocumentListener = mDocListenerMap.get(source.getProject());
                     if (activatePowerDocumentListener != null)
@@ -65,7 +64,7 @@ public class FireBirdManager {
 
                 @Override
                 public void selectionChanged(@NotNull FileEditorManagerEvent event) {
-                    super.selectionChanged(event);
+                    // super.selectionChanged(event);
 
                     if (state.IS_ENABLE) {
                         destroyShake();

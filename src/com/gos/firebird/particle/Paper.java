@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  */
 public class Paper implements Runnable, Border {
-    private static final int MAX_PARTICLE_COUNT = 256;
+    private static final int MAX_PARTICLE_COUNT = 64;
 
     private static Paper mPaper;
 

@@ -17,7 +17,6 @@ public class CursorListener implements CaretListener {
         Editor editor = caretEvent.getEditor();
         Point point = editor.logicalPositionToXY(caretEvent.getNewPosition());
         Paper.getInstance().setCurrentCaretPosition(point);
-        PaPi.papi();
     }
 
     @Override

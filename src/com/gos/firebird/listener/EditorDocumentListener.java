@@ -1,6 +1,8 @@
 package com.gos.firebird.listener;
 
 
+import com.gos.firebird.voice.PaPi;
+import com.gos.firebird.voice.VoiceResource;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -19,7 +21,6 @@ import java.util.ArrayList;
 
 /**
  * 震动文本监听接口
- * Created by suika on 15-12-13.
  */
 public class EditorDocumentListener implements DocumentListener {
 
@@ -37,6 +38,8 @@ public class EditorDocumentListener implements DocumentListener {
         mProject = project;
     }
 
+    private int documentLines = 0;
+
     @Override
     public void beforeDocumentChange(DocumentEvent documentEvent) {
 
@@ -47,19 +50,28 @@ public class EditorDocumentListener implements DocumentListener {
             if (System.currentTimeMillis() - manage.getClickTimeStamp() <= state.CLICK_TIME_INTERVAL) {
                 manage.setClickCombo(manage.getClickCombo() + 1);
                 state.MAX_CLICK_COMBO = manage.getClickCombo() > state.MAX_CLICK_COMBO ? manage.getClickCombo() : state.MAX_CLICK_COMBO;
-            } else
+            } else {
                 manage.setClickCombo(0);
+            }
 
             manage.setClickTimeStamp(System.currentTimeMillis());
         }
 
-        if ((state.IS_COMBO && manage.getClickCombo() > state.OPEN_FUNCTION_BORDER && mProject != null) || (!state.IS_COMBO && mProject != null))
+        if ((state.IS_COMBO && manage.getClickCombo() > state.OPEN_FUNCTION_BORDER && mProject != null) || (!state.IS_COMBO && mProject != null)) {
             handleActivatePower(manage);
+        }
+
+        this.documentLines = documentEvent.getDocument().getLineCount();
     }
 
     @Override
     public void documentChanged(DocumentEvent documentEvent) {
-
+        int lines = documentEvent.getDocument().getLineCount();
+        if (lines > documentLines) {
+            PaPi.papi(VoiceResource.EnterAudioStream);
+        } else {
+            PaPi.papi();
+        }
     }
 
     public boolean addDocument(Document document) {
